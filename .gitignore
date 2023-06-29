@@ -1,0 +1,8 @@
+/target
+/db
+/mimic-data
+/mimic-code
+/.env
+/*.log
+/mimic-iii-clinical-database-1.4.zip
+/*password.txt

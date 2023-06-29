@@ -1,0 +1,15 @@
+version: '3.5'
+
+services:
+  mimic3:
+    container_name: mimic3
+    image: 'postgres:9.6'
+    ports:
+      - '${DB_PORT}:${DB_IN_PORT}/tcp'
+    environment:
+      TZ: 'US/Central'
+      POSTGRES_DB: mimic3
+      POSTGRES_USER: ${DB_SA_USER}
+      POSTGRES_PASSWORD: ${DB_SA_PASS}
+    volumes:
+      - ${DB_DIR}:/var/lib/postgresql/data
