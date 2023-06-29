@@ -20,9 +20,8 @@ MIMICDB_CONF_FILE=	$(APP_MOUNT_DIR)/db.conf
 mimicdbmkenv:
 			@echo "creating $(MIMICDB_DIR) -> $(MIMICDB_ENV_FILE)"
 			$(eval dir=$(subst /,\/,$(MIMICDB_DIR)))
-			@echo $(dir)
 			make -C $(MIMICDB_DIR) ENV_FILE=$(MIMICDB_ENV_FILE) mkenv
-			sed -i 's/^DB_DIR=\(.\/\)*\(.*\)/DB_DIR=$(dir)\/\2/g' $(MIMICDB_ENV_FILE)
+			@sed -i 's/^DB_DIR=\(.\/\)*\(.*\)/DB_DIR=$(dir)\/\2/g' $(MIMICDB_ENV_FILE)
 			@echo "wrote $(MIMICDB_ENV_FILE)"
 
 .PHONY:			mimicdbmkconf
