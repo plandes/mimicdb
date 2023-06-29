@@ -18,6 +18,7 @@ DOCKER_UP_DEPS =	mkdirs
 
 # build config
 INFO_TARGETS +=		appinfo
+ADD_CLEAN +=		$(ENV_FILE)
 ADD_CLEAN_ALL +=	$(DB_PASS_FILE) $(DB_SA_PASS_FILE)
 CLEAN_ALL_DEPS +=	wipedb
 
@@ -140,6 +141,7 @@ load:			$(EXT_DEPS)
 			( export PGPASSWORD=$(DB_SA_PASS) ; \
 			  make -C $(CODE_DIR) create-user mimic $(CODE_PARAMS) )
 
+# initialize the database
 .PHONY:			init
 init:
 			@make SQL='create user $(DB_USER);' execute
@@ -147,6 +149,16 @@ init:
 			@make SQL='grant all on schema public to public;' execute
 			@make SQL='grant select on all tables in schema public to $(DB_USER);' execute
 
+# copy the configuration and setup from a previously configured mimicdb repo
+.PHONY:			cpconfig
+cpconfig:
+			@echo "copying source configuration from $(SRC_DIR)..."
+			@if [ -z "$(SRC_DIR)" ] ; then \
+				echo "must supply source dir: make SRC_DIR=<source mimicdb dir>" ; \
+				/usr/bin/false ; \
+			fi
+			cp $(SRC_DIR)/{$(DB_PASS_FILE),$(DB_SA_PASS_FILE)} .
+			ln -s $(SRC_DIR)/$(DB_DIR) .
 
 ## User targets
 #
