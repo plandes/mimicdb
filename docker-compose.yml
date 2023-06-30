@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   mimic3:
-    container_name: mimic3
+    container_name: mimicdb
     image: 'postgres:9.6'
     ports:
       - '${DB_PORT}:${DB_IN_PORT}/tcp'
